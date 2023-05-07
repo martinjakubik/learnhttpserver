@@ -3,6 +3,13 @@ import * as oUrl from 'url';
 import * as oFs from 'fs';
 import * as oPath from 'path';
 
+let bDebug = false;
+process.argv.forEach(function (sValue, index, array) {
+    if (sValue === '-d' || sValue === '--debug') {
+        bDebug = true;
+    }
+});
+
 let sBaseDirectory = './app';
 
 let nPort = 1999;
@@ -59,11 +66,16 @@ oHttp.createServer(function (oRequest, oResponse) {
         let sFSPath = oPath.normalize(sPath);
 
         let sFinalPath = getDefaultIfBlankPath(sFSPath);
+        if (bDebug) console.log(`final path: ${sFinalPath}`);
+
         let sContentType = getContentType(sFinalPath);
+        if (bDebug) console.log(`content type: ${sContentType}`);
 
         let oHeaders =  {
             'Content-Type': sContentType
         };
+        if (bDebug) console.log(`headers: ${oHeaders}`);
+        if (bDebug) console.log('----');
 
         oResponse.writeHead(200, oHeaders);
         let oFileStream = oFs.createReadStream(sFinalPath);
