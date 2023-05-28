@@ -45,6 +45,8 @@ let getContentType = function (sPath) {
         sContentType = 'text/css';
     } else if (sPath.includes('.html')) {
         sContentType = 'text/html';
+    } else if (sPath.includes('.png')) {
+         sContentType = 'image/png';
     } else if (sPath.includes('/resources/')) {
         sContentType = 'image/png';
     } else if (process.platform === 'win32' && sPath.includes('\\resources\\')) {
